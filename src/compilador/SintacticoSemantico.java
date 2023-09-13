@@ -259,7 +259,88 @@ public class SintacticoSemantico {
             }
         }
     }
-    
+    /*-----------------------------------------------------
+    EXPRESION'
+    Autor: Arturo Tejeda García
+    Conjunto de primeros = {opsuma, empty}
+    */
+    private void EXPRESION_P() {
+        if ( preAnalisis.equals( "opsuma" ) || preAnalisis.equals( "float" )|| preAnalisis.equals( "string" )){
+            emparejar( "opsuma" );
+            TERMINO();
+            EXPRESION_P();
+        }
+        else{
+            //ERROR
+        }
+    }
+    /*-----------------------------------------------------
+    TERMINO
+    Autor: Arturo Tejeda García
+    Conjunto de primeros = {FACTOR}
+    */
+    private void TERMINO() {
+        if ( preAnalisis.equals( "id" ) || preAnalisis.equals( "num" )|| preAnalisis.equals( "numnum" ) || preAnalisis.equals( "(" )){
+            FACTOR();
+            TERMINO_P();
+        }
+        else{
+            //ERROR
+        }
+    }
+    /*-----------------------------------------------------
+    TERMINO_P
+    Autor: Arturo Tejeda García
+    Conjunto de primeros = {opmult, empty}
+    */
+    private void TERMINO_P() {
+        if ( preAnalisis.equals( "opmult" ) || preAnalisis.equals( "float" )|| preAnalisis.equals( "string" )){
+            emparejar( "opmult" );
+            FACTOR();
+            TERMINO_P();
+        }
+        else {
+            //ERROR
+        }
+    }
+    /*-----------------------------------------------------
+    FACTOR
+    Autor: Arturo Tejeda García
+    Conjunto de primeros = {id, num, num.num}
+    */
+    private void FACTOR() {
+        if ( preAnalisis.equals( "id" ) ){
+            emparejar( "id" );
+            FACTOR_P();
+        }
+        else if ( preAnalisis.equals( "num" ) ){
+            emparejar("num");
+        }
+        else if ( preAnalisis.equals( "numnum" ) ){
+            emparejar("numnum");
+        }
+        else if ( preAnalisis.equals( "(" ) ){
+            EXPRESION();
+            emparejar(")");
+        }
+        else {
+            //ERROR
+        }
+    }
+    /*-----------------------------------------------------
+    FACTOR_P
+    Autor: Arturo Tejeda García
+    Conjunto de primeros = {(, empty}
+    */
+    private void FACTOR_P() {
+        if ( preAnalisis.equals( "(" ) || preAnalisis.equals( "float" )|| preAnalisis.equals( "string" )){
+            LISTA_EXPRESIONES();
+            emparejar( ")" );
+        }
+        else {
+            //ERROR
+        }
+    }
     private void PREPOSICION_P() {
         
     }
